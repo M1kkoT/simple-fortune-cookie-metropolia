@@ -1,0 +1,23 @@
+version: '3.3'
+
+services:
+  backend:
+    build: ./backend 
+    user: root
+    ports:
+      - 9000:9000
+    container_name: simple-fortune-cookie-backend 
+
+  frontend:
+    build: ./frontend 
+    user: root
+    ports:
+      - 8080:8080
+    container_name: simple-fortune-cookie-frontend
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+    environment:
+      - BACKEND_DNS=backend
+      - BACKEND_PORT=9000
